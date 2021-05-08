@@ -1,0 +1,50 @@
+<div class="home">
+  <mat-sidenav-container class="container">
+    <mat-sidenav mode="side" closed>Sidenav content</mat-sidenav>
+    <mat-sidenav-content class="content">
+      <button class="card" mat-button
+        *ngFor=" let track of playlist"
+        (click)="start(track)"
+        >
+        <mat-card [class.active]="track === activeTrack" >
+          <mat-icon>play_circle_filled</mat-icon>
+          {{ track.name }}
+        </mat-card>
+    </button>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  <span style="box-shadow: 0px 0px 4px 1px black; font-size: 1rem; text-align: center; background-color: rgb(49, 49, 49); width: 100%; color: white;" *ngIf="isPlaying">Playing {{ activeTrack.name }}</span>
+  <mat-toolbar color="primary" class="player">
+    <mat-toolbar-row class="controll">
+      <button mat-icon-button class="left"
+        (click)="prev()"
+      >
+        <mat-icon>skip_previous</mat-icon>
+      </button>
+      <button mat-icon-button class="play"
+        *ngIf="!isPlaying"
+        (click)="togglePlayer(false)"
+      >
+        <mat-icon>play_arrow</mat-icon>
+      </button>
+      <button mat-icon-button class="play"
+        *ngIf="isPlaying"
+        (click)="togglePlayer(true)"
+      >
+        <mat-icon>pause</mat-icon>
+      </button>
+      <button mat-icon-button class="right"
+        (click)="next()"
+      >
+        <mat-icon>skip_next</mat-icon>
+      </button>
+    </mat-toolbar-row>
+    <mat-toolbar-row class="slider">
+      <mat-slider #range
+        [(ngModel)]="progress"
+        max="100" color="accent" aria-label="unit(s)"
+        (touchend)="seek()" (mouseup)="seek()"
+        ></mat-slider>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</div>
